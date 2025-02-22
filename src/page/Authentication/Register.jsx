@@ -1,6 +1,7 @@
 import logo from '../../assets/flowlogo.png'
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
 
 
 
@@ -24,6 +25,12 @@ const Register = () => {
     return (
     <section className=" dark:bg-gray-900">
     <div className="container flex items-center justify-center  px-6 mx-auto">
+        
+
+
+
+
+
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md rounded-2xl  shadow-3xl mt-12 p-2 lg:p-4 border border-slate-50 lg:mt-28">
             <div className="flex flex-col justify-center items-center gap-2 mt-2">
                 <img className="w-16 h-10 sm:h-8" src={logo} alt="" />
@@ -37,6 +44,15 @@ const Register = () => {
                     sign up
                 </a>
             </div>
+            <button className="flex items-center justify-center w-full mt-4 border rounded-lg border-white dark:text-white  dark:hover:bg-gray-600">
+            <div className="px-4 py-2">
+            <FcGoogle className='text-2xl' />
+            </div>
+            <span className="w-5/6 px-4 py-3 text-white font-bold text-center">
+                Sign in with Google
+            </span>
+            </button>
+            
 
             <div className="relative flex items-center mt-8">
                 <span className="absolute">
@@ -122,6 +138,7 @@ const Register = () => {
                 <button type='submit' className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gradient-to-r from-yellow-400 to-gray-800 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                     Sign Up
                 </button>
+               
 
                 <div className="mt-6 text-center">
                     <a href="#" className="text-sm text-blue-500 hover:underline dark:text-blue-400">
@@ -129,8 +146,11 @@ const Register = () => {
                     </a>
                     <Link to='/login' className='text-white font-semibold ml-2'>Login</Link>
                 </div>
+                
             </div>
+            
         </form>
+        
     </div>
 </section>
 );
