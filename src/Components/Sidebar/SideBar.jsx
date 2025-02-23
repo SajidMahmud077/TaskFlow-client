@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import logo from '../../assets/flowlogo.png';
+import TaskBoard from '../TaskBoard/TaskBoard'
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,13 +85,12 @@ const SideBar = () => {
             </svg>
           </button>
 
-          {/* Search Bar */}
-          <div className="flex-1 flex justify-center">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered w-full max-w-xs border rounded-3xl px-3 py-2 border-gray-400 focus:ring focus:ring-blue-200 text-black"
-            />
+          
+          <div className="flex-1 flex justify-start">
+          <a href="#" className="flex gap-3 text-2xl font-bold mb-8 mt-4">
+            <img className="h-8 w-8" src={logo} alt="Logo" />
+            <span className="text-gray-700 font-roboto text-3xl">Task<span className='text-orange-500  font-roboto text-3xl'>FLOW</span></span>
+          </a>
           </div>
 
           {/* Profile Dropdown */}
@@ -122,8 +122,8 @@ const SideBar = () => {
         </nav>
 
         {/* Page Content */}
-        <main className="p-4 mt-16">
-          <h1 className="text-2xl font-bold text-gray-800">Welcome to the Dashboard</h1>
+        <main className="p-4 mt-24">
+        <TaskBoard/>
         </main>
       </div>
     </div>

@@ -5,7 +5,7 @@ import logo from '../../assets/flowlogo.png'
 const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen  dark:bg-gray-900 px-4">
-      <div className="flex w-full max-w-4xl overflow-hidden text-white rounded-lg shadow-lg dark:bg-gray-800">
+      <div className="flex w-full max-w-4xl overflow-hidden text-white rounded-lg shadow-lg bg-gray-800">
     
         <div
           className="hidden lg:block lg:w-1/2 bg-cover"

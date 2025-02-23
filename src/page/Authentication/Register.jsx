@@ -25,16 +25,11 @@ const Register = () => {
     return (
     <section className=" dark:bg-gray-900">
     <div className="container flex items-center justify-center  px-6 mx-auto">
-        
 
-
-
-
-
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md rounded-2xl  shadow-3xl mt-12 p-2 lg:p-4 border border-slate-50 lg:mt-28">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md rounded-2xl  shadow-3xl mt-12 p-2 lg:p-4 border border-slate-50 bg-gray-800 lg:mt-28">
             <div className="flex flex-col justify-center items-center gap-2 mt-2">
                 <img className="w-16 h-10 sm:h-8" src={logo} alt="" />
-                <span className='font-roboto text-3xl text-white font-semibold'>TaskFlow</span>
+                <span className='font-roboto text-3xl font-semibold text-white'>Task<span className='text-3xl font-roboto text-orange-500'>FLOW</span></span>
             </div>
             
             <div className="flex items-center justify-center mt-6">
@@ -135,10 +130,10 @@ const Register = () => {
                 )}
 
             <div className="mt-6">
-                <button type='submit' className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gradient-to-r from-yellow-400 to-gray-800 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                <button type='submit' className="w-full px-6 rounded-xl py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-yellow-500  hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                     Sign Up
                 </button>
-               
+                
 
                 <div className="mt-6 text-center">
                     <a href="#" className="text-sm text-blue-500 hover:underline dark:text-blue-400">
