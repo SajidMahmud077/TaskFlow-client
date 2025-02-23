@@ -2,28 +2,94 @@ import logo from '../../assets/flowlogo.png'
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import useAuth from '../../Hooks/useAuth'
+import useAxiosPublic from '../../Hooks/useAxiosPublic'
+import toast from 'react-hot-toast'
+import { useNavigate } from "react-router-dom";
 
 
 
 const Register = () => {
+    
     const {
         register,
+        reset,
         handleSubmit,
         
         formState: { errors },
-      } = useForm();
+    } = useForm();
+    const {createUser, updateUserProfile,signInWithGoogle}=useAuth();
+    const axiosPublic= useAxiosPublic()
+    const navigate=useNavigate()
+
+
+
+
+    const handleGoogleSignIn = () => {
+        signInWithGoogle().then((result) => {
+          console.log(result.user);
+          const userInfo = {
+            email: result.user?.email,
+            name: result.user?.displayName,
+            
+          };
+    
+          axiosPublic.post("/users", userInfo).then((res) => {
+            console.log(res.data);
+            navigate('/sidebar');
+          });
+        });
+      };
 
         
         const onSubmit=(data)=>{
-            console.log(data)
+            console.log(data);
+            createUser(data.email, data.password).then((result)=>{
+                const loggedUser=result.user;
+                console.log(loggedUser);
+        
+            return updateUserProfile(data.name, data.photoURL).then(()=>{
+                const userInfo={
+                    name: data.name,
+                    email: data.email
+                };
 
-      }
+                axiosPublic.post('/users', userInfo).then((res)=>{
+                    if(res.data.insertedId){
+                        console.log('User added to Database')
+                        reset()
+                        toast.success('User Registration Successfull')
+                    }
+
+                    navigate('/sidebar')
+
+
+                })
+
+
+
+
+            })
+
+
+
+
+
+
+
+
+
+
+            })
+
+        }
 
 
 
         
     return (
     <section className=" dark:bg-gray-900">
+            
     <div className="container flex items-center justify-center  px-6 mx-auto">
 
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md rounded-2xl  shadow-3xl mt-12 p-2 lg:p-4 border border-slate-50 bg-gray-800 lg:mt-28">
@@ -39,7 +105,7 @@ const Register = () => {
                     sign up
                 </a>
             </div>
-            <button className="flex items-center justify-center w-full mt-4 border rounded-lg border-white dark:text-white  dark:hover:bg-gray-600">
+            <button onClick={handleGoogleSignIn} className="flex items-center justify-center w-full mt-4 border rounded-lg border-white dark:text-white  dark:hover:bg-gray-600">
             <div className="px-4 py-2">
             <FcGoogle className='text-2xl' />
             </div>

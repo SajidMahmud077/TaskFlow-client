@@ -1,39 +1,35 @@
-import { useState, useEffect } from "react";
-import logo from '../../assets/flowlogo.png';
-import TaskBoard from '../TaskBoard/TaskBoard'
+import { useState, } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
+import logo from "../../assets/flowlogo.png";
+import TaskBoard from "../TaskBoard/TaskBoard";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user, logOut } = useAuth();
+  const navigate = useNavigate(); // Initialize navigate function
 
-  const user = {
-    name: "Sajid Mahmud",
-    avatar: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        toast.success(`${user?.displayName} logged out successfully!`);
+        
+        // Navigate to login page after 1 second
+        setTimeout(() => {
+          navigate("/login");
+        }, 500);
+      })
+      .catch((error) => console.log(error));
   };
-
-  // Close sidebar when clicking outside
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (!event.target.closest("#logo-sidebar") && !event.target.closest("#menu-btn")) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("click", handleOutsideClick);
-    } else {
-      document.removeEventListener("click", handleOutsideClick);
-    }
-
-    return () => document.removeEventListener("click", handleOutsideClick);
-  }, [isOpen]);
 
   return (
     <div className="flex">
       {/* Sidebar */}
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 w-64 h-screen bg-white  text-white shadow-xl transition-transform flex flex-col justify-center items-center ${
+        className={`fixed top-0 left-0 w-64 h-screen bg-white text-white shadow-xl transition-transform flex flex-col justify-center items-center ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
         aria-label="Sidebar"
@@ -42,23 +38,25 @@ const SideBar = () => {
           {/* Logo */}
           <a href="#" className="flex gap-3 text-2xl font-bold mb-8">
             <img className="h-12 w-12" src={logo} alt="Logo" />
-            <span className="text-gray-700 font-roboto text-3xl">Task<span className='text-orange-500  font-roboto text-3xl'>FLOW</span></span>
+            <span className="text-gray-700 font-roboto text-3xl">
+              Task<span className="text-orange-500 font-roboto text-3xl">FLOW</span>
+            </span>
           </a>
 
           {/* Sidebar Items */}
           <ul className="space-y-6">
             <li>
-              <a href="#" className="block text-gray-800 font-roboto px-4 py-2 text-lg font-medium  rounded-lg">
+              <a href="#" className="block text-gray-800 font-roboto px-4 py-2 text-lg font-medium rounded-lg">
                 Your Task
               </a>
             </li>
             <li>
-              <a href="#" className="block text-gray-800 font-roboto px-4 py-2 text-lg font-medium  rounded-lg">
+              <a href="#" className="block text-gray-800 font-roboto px-4 py-2 text-lg font-medium rounded-lg">
                 Create Task
               </a>
             </li>
             <li>
-              <a href="#" className="block font-roboto text-gray-800 px-4 py-2 text-lg font-medium  rounded-lg">
+              <a href="#" className="block font-roboto text-gray-800 px-4 py-2 text-lg font-medium rounded-lg">
                 Manage Task
               </a>
             </li>
@@ -85,12 +83,13 @@ const SideBar = () => {
             </svg>
           </button>
 
-          
           <div className="flex-1 flex justify-start">
-          <a href="#" className="flex gap-3 text-2xl font-bold mb-8 mt-4">
-            <img className="h-8 w-8" src={logo} alt="Logo" />
-            <span className="text-gray-700 font-roboto text-3xl">Task<span className='text-orange-500  font-roboto text-3xl'>FLOW</span></span>
-          </a>
+            <a href="#" className="flex gap-3 text-2xl font-bold mb-8 mt-4">
+              <img className="h-8 w-8" src={logo} alt="Logo" />
+              <span className="text-gray-700 font-roboto text-3xl">
+                Task<span className="text-orange-500 font-roboto text-3xl">FLOW</span>
+              </span>
+            </a>
           </div>
 
           {/* Profile Dropdown */}
@@ -100,18 +99,18 @@ const SideBar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img className="rounded-full" alt="User Profile" src={user.avatar} />
+                <img className="rounded-full" alt="User Profile" src={user?.photoURL} />
               </div>
             </button>
 
             {isDropdownOpen && (
               <ul className="absolute right-0 mt-3 w-48 bg-white shadow-lg rounded-lg py-2 z-50">
-                <li className="px-4 py-2 text-gray-700">{user.name}</li>
+                <li className="px-4 py-2 text-gray-700">{user?.displayName}</li>
                 <hr />
                 <li>
                   <button
-                    className="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100"
-                    onClick={() => console.log("Logged out")}
+                    className="w-full px-4 py-2 font-semibold text-left text-red-600 hover:bg-gray-100"
+                    onClick={handleLogOut}
                   >
                     Logout
                   </button>
@@ -123,7 +122,7 @@ const SideBar = () => {
 
         {/* Page Content */}
         <main className="p-4 mt-24">
-        <TaskBoard/>
+          <TaskBoard />
         </main>
       </div>
     </div>
