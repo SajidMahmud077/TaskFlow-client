@@ -42,7 +42,34 @@ const Register = () => {
       };
 
         
-        const onSubmit=(data)=>{
+        const onSubmit = (data) => {
+        console.log(data);
+        createUser(data.email, data.password)
+            .then((result) => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+
+                return updateUserProfile(data.name, data.photoURL)
+                    .then(() => {
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        };
+
+                        axiosPublic.post('/users', userInfo).then((res) => {
+                            if (res.data.insertedId) {
+                                console.log('User added to Database');
+                                reset();
+                                toast.success('User Registration Successful');
+                                navigate('/sidebar');
+                            }
+                        });
+                    });
+            })
+            .catch((error) => {
+                console.error(error);
+                toast.error('Registration failed!.your email alreaddy use');
+            });
             console.log(data);
             createUser(data.email, data.password).then((result)=>{
                 const loggedUser=result.user;
@@ -60,24 +87,11 @@ const Register = () => {
                         reset()
                         toast.success('User Registration Successfull')
                     }
-
                     navigate('/sidebar')
-
-
+                    
                 })
-
-
-
-
+                
             })
-
-
-
-
-
-
-
-
 
 
             })
@@ -85,8 +99,6 @@ const Register = () => {
         }
 
 
-
-        
     return (
     <section className=" dark:bg-gray-900">
             

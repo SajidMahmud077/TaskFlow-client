@@ -41,9 +41,6 @@ const AuthProvider = ({children}) => {
 
 
 
-
-
-
   const authInfo={
     user,
     loading,
@@ -75,10 +72,6 @@ const AuthProvider = ({children}) => {
 
 
   },[])
-
-
-
-
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
